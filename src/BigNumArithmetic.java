@@ -13,8 +13,10 @@ import java.io.IOException;
  */
 public class BigNumArithmetic {
     /**
-     * @param args
-     *            takes the input file (sampleInputFile.txt) as an argument
+     * @param args an array of command-line 
+     * arguments for the application
+     * takes the input file (sampleInputFile.txt) as 
+     * an argument
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
@@ -31,10 +33,8 @@ public class BigNumArithmetic {
 
 
     /**
+     * @param filename name of the input file
      * opens the file and reads its contents
-     * 
-     * @param fileName name of the input file
-     * name of the file to be read
      * @return scanned file
      * @throws FileNotFoundException
      */
@@ -46,46 +46,63 @@ public class BigNumArithmetic {
 
 
     /**
+     * removes leading zeroes
+     * @param line value
+     * takes string line as input
+     * @return processed string
+     */
+    public static String removeLeadingZeroes(String line) {
+        String regex = "^0+(?!$)";
+        return line.replaceAll(regex, "");
+    }
+
+
+    /**
      * parses the line by removing leading zeroes and spaces
-     * 
-     * @param line
-     *            takes string line as input
+     * @param line lien to be parsed
+     * takes string line as input
      * @return processed line
      */
     public static String lineParser(String line) {
         String processedLine = line.trim().replaceAll("\\s+", " ");
-        return processedLine.replaceAll("^0+(?!$)", "");
-
+        return processedLine;
     }
 
 
     /**
      * @param line
-     *            takes individual line of the file as arg takes the array of
-     *            the
-     *            string from each line of file
+     * takes individual line of the file as arg
+     * takes the array of the
+     * string from each line of file
+     * @return the output of rpn expression
      */
     public static String rpnCalc(String line) {
         DefinedStack definedStack = new DefinedStack();
 
         String[] data = line.split(" ");
         for (String val : data) {
+            val = removeLeadingZeroes(val);
             switch (val) {
                 case "+":
                     String sumNum1 = definedStack.pop();
                     String sumNum2 = definedStack.pop();
-                    AddLinkedList linkedList = new AddLinkedList();
-                    String sumOutput = linkedList.main(sumNum1, sumNum2);
+                    AddLinkedList addList = new AddLinkedList();
+                    String sumOutput = addList.main(sumNum1, sumNum2);
                     definedStack.push(sumOutput);
-                    break;
+                    break; 
                 case "*":
                     String prodNum1 = definedStack.pop();
                     String prodNum2 = definedStack.pop();
                     MulLinkedList mulList = new MulLinkedList();
                     String mulOutput = mulList.main(prodNum1, prodNum2);
-                    definedStack.push(mulOutput);
+                    definedStack.push(removeLeadingZeroes(mulOutput));
                     break;
                 case "^":
+                    String expNum1 = definedStack.pop();
+                    String expNum2 = definedStack.pop();
+                    ExpLinkedList expList = new ExpLinkedList();
+                    String expOutput = expList.main(expNum1, expNum2);
+                    definedStack.push(expOutput);
                     break;
                 default:
                     definedStack.push(val);
@@ -97,7 +114,9 @@ public class BigNumArithmetic {
 
 
     /**
-     * @param line value prints the parameters on screen
+     * @param line input line
+     * @param value result of the expression
+     * prints the result on screen
      */
     public static void printOutput(String line, String value) {
         System.out.println(line + " = " + value);

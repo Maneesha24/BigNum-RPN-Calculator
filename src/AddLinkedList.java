@@ -10,23 +10,19 @@ public class AddLinkedList {
 
     private static Node head;
 
-    private static String result = "";
-
     /**
      * This Node class implements a “Node”
      * which represents indv node in the list
-     * 
      * @author maneeshavenigalla maneesha24@vt.edu
      * @version 1.0
-     *
      */
     private static class Node {
         private int value;
         private Node next;
 
         /**
-         * @param value
-         *            takes the value of data to be assigned
+         * @param value value to be
+         * be assigned
          */
         public Node(int value) {
             this.value = value;
@@ -35,9 +31,9 @@ public class AddLinkedList {
     }
 
     /**
-     * @param node
-     *            takes the value of the node to be appended
-     *            at the end of the linked list
+     * @param node node to be appended
+     * takes the value of the node to be appended
+     * at the end of the linked list
      */
     public void appendAtTheEnd(Node node) {
 
@@ -56,27 +52,10 @@ public class AddLinkedList {
 
 
     /**
-     * @param resultNode
-     *            takes the value of the output node
-     * @return result
-     *         returns the string value of the output node
-     */
-    public String outputResult(Node resultNode) {
-        Node temp = resultNode;
-        while (temp != null) {
-            result += Integer.toString(temp.value);
-            temp = temp.next;
-        }
-
-        return result;
-    }
-
-
-    /**
-     * @param node
-     *            takes the value of the linked list
+     * @param node node to be reverse
+     * takes the value of the linked list
      * @return nextNodes
-     *         recursively reverses all the nodes in the list
+     * recursively reverses all the nodes in the list
      */
     public static Node reverse(Node node) {
         if (node == null || node.next == null) {
@@ -91,66 +70,68 @@ public class AddLinkedList {
 
 
     /**
-     * @param firstNumber
-     *            secondNumber
-     *            takes the value of the numbers to be added
+     * @param firstNumber firstnum
+     * @param secondNumber secondnum
+     * takes the value of the numbers to be added
      * @return initialHead
-     *         returns the value of the head
+     * returns the addition of two linked lists
      */
-    public Node addLinkedLists(Node firstNumber, Node secondNumber) {
-        Node initialHead = null;
+    public String addLinkedLists(Node firstNumber, Node secondNumber) {
+        
         int carryVal = 0;
-
-        Node tempNodeForIteration = null;
-        int sumResult = 0;
-
-        int count = 0;
+        int sum = 0;
+        String result = "";
+        //Step 1 - Loop till the end of two numbers
         while (firstNumber != null || secondNumber != null) {
-            count++;
-            sumResult = carryVal;
-            if (firstNumber != null) {
-                sumResult = sumResult + firstNumber.value;
+            
+            // Step 2 - Add one digit from each lsit and carry if present
+            sum = carryVal + (firstNumber != null ? firstNumber.value : 0)
+                + (secondNumber != null ? secondNumber.value : 0);
+            
+            // Step 3 - Update the value of carry
+            if (sum >= 10) {
+                carryVal = 1;
+            } 
+            else 
+            {
+                carryVal = 0;
+            }
+            
+            if (firstNumber != null) 
+            {
                 firstNumber = firstNumber.next;
             }
-
-            if (secondNumber != null) {
-                sumResult = sumResult + secondNumber.value;
+            if (secondNumber != null) 
+            {
                 secondNumber = secondNumber.next;
             }
-
-            carryVal = sumResult / 10;
-            sumResult = sumResult % 10;
-            if (count == 1) {
-                tempNodeForIteration = new Node(sumResult);
-                initialHead = tempNodeForIteration;
-            }
-            else {
-                Node tempSumNode = new Node(sumResult);
-                tempNodeForIteration.next = tempSumNode;
-                tempNodeForIteration = tempNodeForIteration.next;
-            }
-
+            
+            // Step 3 - Update the value of sum
+            sum = sum % 10;
+            
+            // Step 4 - Store each digit of sum
+            result = sum + result;
         }
-        if (carryVal != 0) {
-            Node tempNode = new Node(carryVal);
-            tempNodeForIteration.next = tempNode;
+        
+        if (carryVal > 0) {
+            result = Integer.toString(carryVal) + result;
         }
-        return initialHead;
+        
+        return result;
     }
 
 
     /**
-     * @param firstString
-     *            secondString
-     *            takes the value of the numbers to be added
-     *            as string
+     * @param firstString firstnum
+     * @param secondString secondnum
+     * takes the value of the strings to be added
+     *  as string
      * @return string output from the output result function
      */
     public static String main(String firstString, String secondString) {
+        
 
         AddLinkedList list = new AddLinkedList();
-
-        result = "";
 
         Node firstNum = new Node(Character.getNumericValue(firstString.charAt(
             0)));
@@ -174,11 +155,9 @@ public class AddLinkedList {
 
         secondNum = reverse(secondNum);
 
-        Node result = list.addLinkedLists(firstNum, secondNum);
+        String sum = list.addLinkedLists(secondNum, firstNum);
 
-        result = reverse(result);
-
-        return list.outputResult(result);
+        return sum;
 
     }
 

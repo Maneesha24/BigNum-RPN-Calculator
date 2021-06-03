@@ -22,8 +22,7 @@ public class BigNumArithmeticTest {
      * checks for two numbers
      */
     @Test
-    public void testFileFunc() throws IOException {
-        final PrintStream standardOut = System.out;
+    public void simpleTwoAddition() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -41,8 +40,7 @@ public class BigNumArithmeticTest {
      * checks for three numbers
      */
     @Test
-    public void testFileFunc2() throws IOException {
-        final PrintStream standardOut = System.out;
+    public void simpleThreeAddition() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -60,17 +58,17 @@ public class BigNumArithmeticTest {
      * checks for big numbers
      */
     @Test
-    public void testFileFunc3() throws IOException {
-        final PrintStream standardOut = System.out;
+    public void complexThreeAddition() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
         System.setOut(new PrintStream(outputStreamCaptor));
         FileWriter myWriter = new FileWriter("test-file.txt");
-        myWriter.write("1999999999 2999999999 3999999999 + +");
+        myWriter.write("1999999999 2999999997 + 1 +");
         myWriter.close();
         bigNum.main(new String[]{"test-file.txt"});
-        assertEquals("1999999999 2999999999 3999999999 + + = 8999999997", outputStreamCaptor.toString().trim());
+        assertEquals("1999999999 2999999997 + 1 + = "
+            + "4999999997", outputStreamCaptor.toString().trim());
     }
     
     /**
@@ -79,8 +77,7 @@ public class BigNumArithmeticTest {
      * checks for big numbers
      */
     @Test
-    public void testFileFunc4() throws IOException {
-        final PrintStream standardOut = System.out;
+    public void simpleTwoMultiplication() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -98,8 +95,43 @@ public class BigNumArithmeticTest {
      * checks for big numbers
      */
     @Test
-    public void testFileFunc5() throws IOException {
-        final PrintStream standardOut = System.out;
+    public void simpleThreeMultiplication() throws IOException {
+        final ByteArrayOutputStream outputStreamCaptor =
+            new ByteArrayOutputStream();
+        
+        System.setOut(new PrintStream(outputStreamCaptor));
+        FileWriter myWriter = new FileWriter("test-file.txt");
+        myWriter.write("3 5 * 5 *");
+        myWriter.close();
+        bigNum.main(new String[]{"test-file.txt"});
+        assertEquals("3 5 * 5 * = 75", outputStreamCaptor.toString().trim());
+    }
+ 
+    /**
+     * @throws IOException 
+     * returns true if the condition passes
+     * checks for big numbers
+     */
+    @Test
+    public void simpleExponentiation() throws IOException {
+        final ByteArrayOutputStream outputStreamCaptor =
+            new ByteArrayOutputStream();
+        
+        System.setOut(new PrintStream(outputStreamCaptor));
+        FileWriter myWriter = new FileWriter("test-file.txt");
+        myWriter.write("5 3 ^");
+        myWriter.close();
+        bigNum.main(new String[]{"test-file.txt"});
+        assertEquals("5 3 ^ = 125", outputStreamCaptor.toString().trim());
+    }
+    
+    /**
+     * @throws IOException 
+     * returns true if the condition passes
+     * checks for big numbers
+     */
+    @Test
+    public void simpleRPN() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -109,6 +141,25 @@ public class BigNumArithmeticTest {
         myWriter.close();
         bigNum.main(new String[]{"test-file.txt"});
         assertEquals("3 5 * 5 + = 20", outputStreamCaptor.toString().trim());
+    }
+    
+    /**
+     * @throws IOException 
+     * returns true if the condition passes
+     * checks for big numbers
+     */
+    @Test
+    public void simpleRPN2() throws IOException {
+        final ByteArrayOutputStream outputStreamCaptor =
+            new ByteArrayOutputStream();
+        
+        System.setOut(new PrintStream(outputStreamCaptor));
+        FileWriter myWriter = new FileWriter("test-file.txt");
+        myWriter.write("3 5 * 5 + 2 ^");
+        myWriter.close();
+        bigNum.main(new String[]{"test-file.txt"});
+        assertEquals("3 5 * 5 + 2 ^ = 400", 
+            outputStreamCaptor.toString().trim());
     }
 
 }
