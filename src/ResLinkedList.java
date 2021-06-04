@@ -6,7 +6,7 @@
  * @version 1.0
  *
  */
-public class ExpLinkedList {
+public class ResLinkedList {
 
     private static Node head;
 
@@ -107,9 +107,9 @@ public class ExpLinkedList {
      * @return initialHead
      * returns the addition of two linked lists
      */
-    public static String mulLinkedLists(String firstStr, String secondStr) {
+    public static String calcMul(String firstStr, String secondStr) {
         
-        ExpLinkedList list = new ExpLinkedList();
+        ResLinkedList list = new ResLinkedList();
         
         Node firstNum = new Node(Character.getNumericValue(firstStr.charAt(
             0)));
@@ -157,7 +157,7 @@ public class ExpLinkedList {
      *  as string
      */
     private static void addTwoLists(Node firstNum, Node resItr) {
-        
+                
         Node currentNode = firstNum;
         Node resultNode = resItr;
         int carryVal = 0;
@@ -185,6 +185,86 @@ public class ExpLinkedList {
             }
             resultNode = resultNode.next;
         }
+        
+    }
+    
+    /**
+     * @param firstString firstnum
+     * @param secondString secondnum
+     * takes the value of the numbers to be added
+     * @return string
+     * returns the addition of two linked lists
+     */
+    public static String calcAdd(String firstString, String secondString) {
+        
+        ResLinkedList addlist = new ResLinkedList();
+
+        
+        Node firstNumber = new Node(Character.
+            getNumericValue(firstString.charAt(0)));
+        addlist.appendAtTheEnd(firstNumber);
+
+        for (int i = 1; i < firstString.length(); i++) {
+            addlist.appendAtTheEnd(new Node( Character.
+                getNumericValue(firstString.charAt(i))));
+        }
+
+        head = null;
+        Node secondNumber = new Node(Character.
+            getNumericValue(secondString.charAt(
+            0)));
+        addlist.appendAtTheEnd(secondNumber);
+        for (int j = 1; j < secondString.length(); j++) {
+            addlist.appendAtTheEnd(new Node(Character.
+                getNumericValue(secondString
+                .charAt(j))));
+        }
+
+        firstNumber = reverse(firstNumber);
+
+        secondNumber = reverse(secondNumber);
+        
+        int carryVal = 0;
+        int sum = 0;
+        String result = "";
+        //Step 1 - Loop till the end of two numbers
+        while (firstNumber != null || secondNumber != null) {
+            
+            // Step 2 - Add one digit from each lsit and carry if present
+            sum = carryVal + (firstNumber != null ? firstNumber.value : 0)
+                + (secondNumber != null ? secondNumber.value : 0);
+            
+            // Step 3 - Update the value of carry
+            if (sum >= 10) {
+                carryVal = 1;
+            } 
+            else 
+            {
+                carryVal = 0;
+            }
+            
+            if (firstNumber != null) 
+            {
+                firstNumber = firstNumber.next;
+            }
+            if (secondNumber != null) 
+            {
+                secondNumber = secondNumber.next;
+            }
+            
+            // Step 3 - Update the value of sum
+            sum = sum % 10;
+            
+            // Step 4 - Store each digit of sum
+            result = sum + result;
+        }
+        
+        if (carryVal > 0) {
+            result = Integer.toString(carryVal) + result;
+        }
+        
+        return result;
+        
     }
 
 
@@ -195,26 +275,11 @@ public class ExpLinkedList {
      *  as string
      * @return string output from the output result function
      */
-    public static String main(String firstString, String secondString) {
+    public static String calcExp(String firstString, String secondString) {
 
-        String expProd = expLinkedLists(firstString, secondString);
-                
-        return expProd;
-    }
-    
-    /**
-     * @param firstString firstNumber
-     * @param secondString secondnumber
-     * takes the value of the numbers to be be powered
-     * @return result
-     * returns the power exp of two linked lists
-     */
-    private static String expLinkedLists(String 
-        firstString, String secondString) {
-        
         int power = Integer.parseInt(firstString);
         
-        String square = mulLinkedLists(secondString, secondString);
+        String square = calcMul(secondString, secondString);
         String tempString = square;
         
         if (power == 0) 
@@ -232,7 +297,7 @@ public class ExpLinkedList {
             //Formula from canvas - (x ^ 2) ^ (n/2)
             int n = power / 2;
             for (int i = 1; i < n; i++) {
-                tempString = mulLinkedLists(tempString, square);
+                tempString = calcMul(tempString, square);
             }
         } 
         else
@@ -241,15 +306,14 @@ public class ExpLinkedList {
              // Formula from canvas - x * (x ^ 2) ^ (n - 1/2)
             int n = power;
             for (int i = 1; i < n - 1; i++) {
-                String prod = mulLinkedLists(tempString, secondString);
+                String prod = calcMul(tempString, secondString);
                 tempString = prod;
             }
         }
             
         return tempString;
-
     }
-
+    
     /**
      * @param resultNode outputnode
      * takes the value of output node to be printed

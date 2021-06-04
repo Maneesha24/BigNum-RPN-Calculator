@@ -84,54 +84,52 @@ public class BigNumArithmetic {
      */
     public static String rpnCalc(String line) {
         DefinedStack stack = new DefinedStack();
-        stack.emptyStack();   
+        stack.emptyStack();
 
         String[] data = line.split(" ");
         Boolean error = false;
         for (String val : data) {
             val = removeLeadingZeroes(val);
-            switch (val) {
-                case "+":
+            if (checkOperator(val)) {
+                if (val.equals("+")) {
                     if (stack.getStackSize() > 1) {
                         String sumNum1 = stack.pop();
                         String sumNum2 = stack.pop();
-                        AddLinkedList addList = new AddLinkedList();
-                        String sumOutput = addList.main(sumNum1, sumNum2);
+                        String sumOutput = ResLinkedList.calcAdd(sumNum1,
+                            sumNum2);
                         stack.push(sumOutput);
                     }
                     else {
                         error = true;
                     }
-                    break;
-                case "*":
+                }
+                else if (val.equals("*")) {
                     if (stack.getStackSize() > 1) {
                         String prodNum1 = stack.pop();
                         String prodNum2 = stack.pop();
-                        ExpLinkedList expList = new ExpLinkedList();
-                        String mulOutput = expList.
-                            mulLinkedLists(prodNum1, prodNum2);
+                        String mulOutput = ResLinkedList.calcMul(prodNum1,
+                            prodNum2);
                         stack.push(removeLeadingZeroes(mulOutput));
                     }
                     else {
                         error = true;
                     }
-                    break;
-                case "^":
+                }
+                else {
                     if (stack.getStackSize() > 1) {
                         String expNum1 = stack.pop();
                         String expNum2 = stack.pop();
-                        ExpLinkedList expList = new ExpLinkedList();
-                        String expOutput = expList.main(expNum1, expNum2);
+                        String expOutput = ResLinkedList.calcExp(expNum1,
+                            expNum2);
                         stack.push(removeLeadingZeroes(expOutput));
                     }
                     else {
                         error = true;
                     }
-                    break;
-                default:
-                    stack.push(val);
-                    break;
-
+                }
+            }
+            else {
+                stack.push(val);
             }
         }
 
@@ -140,6 +138,15 @@ public class BigNumArithmetic {
         }
         stack.emptyStack();
         return "";
+    }
+
+    /**
+     * checks if the value is operator
+     * @param val the value to be checked
+     * @return true if value is *, + or ^
+     */
+    private static boolean checkOperator(String val) {
+        return val.equals("+") || val.equals("*") || val.equals("^");
     }
 
 
