@@ -13,17 +13,18 @@ import java.io.IOException;
  */
 public class BigNumArithmetic {
     /**
-     * @param args an array of command-line 
+     * @param args an array of command-line
      * arguments for the application
-     * takes the input file (sampleInputFile.txt) as 
-     * an argument
+     * takes the input file (sampleInputFile.txt) as
+     *  an argument
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         BufferedReader scannedFile = openFile(args[0]);
         String line;
         while ((line = scannedFile.readLine()) != null) {
-            if (line.length() > 2) {
+            if (line.length() > 2) 
+            {
                 String parsedLine = lineParser(line);
                 String rpnOutput = rpnCalc(parsedLine);
                 printOutput(parsedLine, rpnOutput);
@@ -59,7 +60,7 @@ public class BigNumArithmetic {
 
     /**
      * parses the line by removing leading zeroes and spaces
-     * @param line lien to be parsed
+     * @param line line to be parsed
      * takes string line as input
      * @return processed line
      */
@@ -70,8 +71,7 @@ public class BigNumArithmetic {
 
 
     /**
-     * @param line
-     * takes individual line of the file as arg
+     * @param line takes individual line of the file as arg
      * takes the array of the
      * string from each line of file
      * @return the output of rpn expression
@@ -82,40 +82,62 @@ public class BigNumArithmetic {
         String[] data = line.split(" ");
         for (String val : data) {
             val = removeLeadingZeroes(val);
-            switch (val) {
-                case "+":
+            if (checkOperator(val)) {
+                if (val.equals("+")) 
+                {
                     String sumNum1 = definedStack.pop();
                     String sumNum2 = definedStack.pop();
                     AddLinkedList addList = new AddLinkedList();
                     String sumOutput = addList.main(sumNum1, sumNum2);
                     definedStack.push(sumOutput);
-                    break; 
-                case "*":
+                }
+                else if (val.equals("*")) 
+                {
                     String prodNum1 = definedStack.pop();
                     String prodNum2 = definedStack.pop();
                     MulLinkedList mulList = new MulLinkedList();
                     String mulOutput = mulList.main(prodNum1, prodNum2);
                     definedStack.push(removeLeadingZeroes(mulOutput));
-                    break;
-                case "^":
-                    String expNum1 = definedStack.pop();
-                    String expNum2 = definedStack.pop();
-                    ExpLinkedList expList = new ExpLinkedList();
-                    String expOutput = expList.main(expNum1, expNum2);
-                    definedStack.push(expOutput);
-                    break;
-                default:
-                    definedStack.push(val);
-                    break;
+                }
+                else
+                {
+                    if (definedStack.getStackSize() >= 2) 
+                    {
+                        String expNum1 = definedStack.pop();
+                        String expNum2 = definedStack.pop();
+                        ExpLinkedList expList = new ExpLinkedList();
+                        String expOutput = expList.main(expNum1, expNum2);
+                        definedStack.push(removeLeadingZeroes(expOutput));
+                    }
+                    else 
+                    {
+                        return "";
+                    }
+                }
+            }
+            else 
+            {
+                definedStack.push(val);
             }
         }
-        return definedStack.pop();
+
+        return definedStack.getStackSize() == 1 ? definedStack.pop() : "";
+    }
+
+
+    /**
+     * @param val operator
+     * checks if the value is an operator
+     */
+    private static boolean checkOperator(String val) {
+        return (val.equals("+") || val.equals("*") || val.equals("^"));
     }
 
 
     /**
      * @param line input line
-     * @param value result of the expression
+     * @param value
+     * result of the expression
      * prints the result on screen
      */
     public static void printOutput(String line, String value) {

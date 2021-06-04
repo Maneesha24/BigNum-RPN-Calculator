@@ -58,7 +58,7 @@ public class AddLinkedList {
      * recursively reverses all the nodes in the list
      */
     public static Node reverse(Node node) {
-        if (node == null || node.next == null) {
+        if (node.next == null) {
             return node;
         }
 

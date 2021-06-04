@@ -58,7 +58,7 @@ public class MulLinkedList {
      * recursively reverses all the nodes in the list
      */
     public static Node reverse(Node node) {
-        if (node == null || node.next == null) {
+        if (node.next == null) {
             return node;
         }
 
@@ -89,7 +89,8 @@ public class MulLinkedList {
             
             currentAns.next = new Node(indv);
             
-            if (currentNode != null) {
+            if (currentNode != null) 
+            {
                 currentNode = currentNode.next;
             }
             currentAns = currentAns.next;
@@ -130,7 +131,6 @@ public class MulLinkedList {
      * @param resItr result iterator
      * takes the value of the strings to be added
      *  as string
-     * @return string output from the output result function
      */
     private static void addTwoLists(Node firstNum, Node resItr) {
         
@@ -149,7 +149,8 @@ public class MulLinkedList {
             if (resultNode.next != null) 
             {
                 resultNode.next.value = value;
-            } else 
+            } 
+            else 
             {
                 resultNode.next = new Node(value);
             }
