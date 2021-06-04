@@ -13,7 +13,7 @@ public class DefinedStack {
      * contains value of the the initial node
      */
     private static Node initialNode;
-  
+      
     /**
      * @param data value to be added
      * takes the value as the input to be pushed to the stack
@@ -43,5 +43,14 @@ public class DefinedStack {
      */
     public static int getStackSize() {
         return stacksize;
+    }
+    
+    /**
+     * empties the stack
+     */
+    public static void emptyStack() {
+        for (int i = 0; i < stacksize; i++) {
+            pop();
+        }
     }
 }

@@ -1,7 +1,7 @@
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * This BigNumArithmetic class implements a “BigNumArithmetic” or infinite
@@ -13,18 +13,18 @@ import java.io.IOException;
  */
 public class BigNumArithmetic {
     /**
-     * @param args an array of command-line
-     * arguments for the application
-     * takes the input file (sampleInputFile.txt) as
-     *  an argument
+     * @param args
+     *            an array of command-line
+     *            arguments for the application
+     *            takes the input file (sampleInputFile.txt) as
+     *            an argument
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        BufferedReader scannedFile = openFile(args[0]);
-        String line;
-        while ((line = scannedFile.readLine()) != null) {
-            if (line.length() > 2) 
-            {
+        Scanner scannedFile = openFile(args[0]);
+        while (scannedFile.hasNextLine()) {
+            String line = scannedFile.nextLine();
+            if (line.length() > 2) {
                 String parsedLine = lineParser(line);
                 String rpnOutput = rpnCalc(parsedLine);
                 printOutput(parsedLine, rpnOutput);
@@ -34,22 +34,25 @@ public class BigNumArithmetic {
 
 
     /**
-     * @param filename name of the input file
-     * opens the file and reads its contents
+     * @param filename
+     *            name of the input file
+     *            opens the file and reads its contents
      * @return scanned file
      * @throws FileNotFoundException
      */
-    public static BufferedReader openFile(String filename)
+    public static Scanner openFile(String filename)
         throws FileNotFoundException {
         FileReader file = new FileReader(filename);
-        return new BufferedReader(file);
+        return new Scanner(file);
     }
 
 
     /**
      * removes leading zeroes
-     * @param line value
-     * takes string line as input
+     * 
+     * @param line
+     *            value
+     *            takes string line as input
      * @return processed string
      */
     public static String removeLeadingZeroes(String line) {
@@ -60,8 +63,10 @@ public class BigNumArithmetic {
 
     /**
      * parses the line by removing leading zeroes and spaces
-     * @param line line to be parsed
-     * takes string line as input
+     * 
+     * @param line
+     *            line to be parsed
+     *            takes string line as input
      * @return processed line
      */
     public static String lineParser(String line) {
@@ -71,74 +76,79 @@ public class BigNumArithmetic {
 
 
     /**
-     * @param line takes individual line of the file as arg
-     * takes the array of the
-     * string from each line of file
+     * @param line
+     *            takes individual line of the file as arg
+     *            takes the array of the
+     *            string from each line of file
      * @return the output of rpn expression
      */
     public static String rpnCalc(String line) {
-        DefinedStack definedStack = new DefinedStack();
+        DefinedStack stack = new DefinedStack();
+        stack.emptyStack();   
 
         String[] data = line.split(" ");
+        Boolean error = false;
         for (String val : data) {
             val = removeLeadingZeroes(val);
-            if (checkOperator(val)) {
-                if (val.equals("+")) 
-                {
-                    String sumNum1 = definedStack.pop();
-                    String sumNum2 = definedStack.pop();
-                    AddLinkedList addList = new AddLinkedList();
-                    String sumOutput = addList.main(sumNum1, sumNum2);
-                    definedStack.push(sumOutput);
-                }
-                else if (val.equals("*")) 
-                {
-                    String prodNum1 = definedStack.pop();
-                    String prodNum2 = definedStack.pop();
-                    MulLinkedList mulList = new MulLinkedList();
-                    String mulOutput = mulList.main(prodNum1, prodNum2);
-                    definedStack.push(removeLeadingZeroes(mulOutput));
-                }
-                else
-                {
-                    if (definedStack.getStackSize() >= 2) 
-                    {
-                        String expNum1 = definedStack.pop();
-                        String expNum2 = definedStack.pop();
+            switch (val) {
+                case "+":
+                    if (stack.getStackSize() > 1) {
+                        String sumNum1 = stack.pop();
+                        String sumNum2 = stack.pop();
+                        AddLinkedList addList = new AddLinkedList();
+                        String sumOutput = addList.main(sumNum1, sumNum2);
+                        stack.push(sumOutput);
+                    }
+                    else {
+                        error = true;
+                    }
+                    break;
+                case "*":
+                    if (stack.getStackSize() > 1) {
+                        String prodNum1 = stack.pop();
+                        String prodNum2 = stack.pop();
+                        ExpLinkedList expList = new ExpLinkedList();
+                        String mulOutput = expList.
+                            mulLinkedLists(prodNum1, prodNum2);
+                        stack.push(removeLeadingZeroes(mulOutput));
+                    }
+                    else {
+                        error = true;
+                    }
+                    break;
+                case "^":
+                    if (stack.getStackSize() > 1) {
+                        String expNum1 = stack.pop();
+                        String expNum2 = stack.pop();
                         ExpLinkedList expList = new ExpLinkedList();
                         String expOutput = expList.main(expNum1, expNum2);
-                        definedStack.push(removeLeadingZeroes(expOutput));
+                        stack.push(removeLeadingZeroes(expOutput));
                     }
-                    else 
-                    {
-                        return "";
+                    else {
+                        error = true;
                     }
-                }
-            }
-            else 
-            {
-                definedStack.push(val);
+                    break;
+                default:
+                    stack.push(val);
+                    break;
+
             }
         }
 
-        return definedStack.getStackSize() == 1 ? definedStack.pop() : "";
+        if (!error && stack.getStackSize() == 1) {
+            return stack.pop();
+        }
+        stack.emptyStack();
+        return "";
     }
 
 
     /**
-     * @param val operator
-     * checks if the value is an operator
-     */
-    private static boolean checkOperator(String val) {
-        return (val.equals("+") || val.equals("*") || val.equals("^"));
-    }
-
-
-    /**
-     * @param line input line
+     * @param line
+     *            input line
      * @param value
-     * result of the expression
-     * prints the result on screen
+     *            result of the expression
+     *            prints the result on screen
      */
     public static void printOutput(String line, String value) {
         System.out.println(line + " = " + value);
