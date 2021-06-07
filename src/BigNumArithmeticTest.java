@@ -22,10 +22,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for test file
      */
     @Test
-    public void testFile() throws IOException {
+    public void testFileTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -38,10 +38,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for invalid rpn equation
      */
     @Test
-    public void invalidRPN() throws IOException {
+    public void invalidRPNTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -57,10 +57,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for simple addition
      */
     @Test
-    public void simpleTwoAddition() throws IOException {
+    public void simpleTwoAdditionTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -76,10 +76,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for complex three number addition
      */
     @Test
-    public void complexThreeAddition() throws IOException {
+    public void complexThreeAdditionTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -95,10 +95,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for simple mul of two numbers
      */
     @Test
-    public void simpleTwoMultiplication() throws IOException {
+    public void simpleTwoMultiplicationTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -114,10 +114,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for complex three number mul
      */
     @Test
-    public void complexThreeMultiplication() throws IOException {
+    public void complexThreeMultiplicationTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -134,10 +134,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for simple exponentiation
      */
     @Test
-    public void simpleExponent() throws IOException {
+    public void simpleExponentTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -154,10 +154,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for series of complex exponentiation
      */
     @Test
-    public void complexExponent() throws IOException {
+    public void complexExponentTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -173,10 +173,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for three number complex exponentiation
      */
     @Test
-    public void complexThreeExponent() throws IOException {
+    public void complexThreeNumExponentTest() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -193,10 +193,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation
      */
     @Test
-    public void complexThreeExponent2() throws IOException {
+    public void complexThreeNumExponentTest2() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -213,7 +213,7 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for unparsed rpn equation
      */
     @Test
     public void parsedMultipplication() throws IOException {
@@ -232,10 +232,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 1
      */
     @Test
-    public void rpnTest1() throws IOException {
+    public void rpnEquationTest1() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -254,10 +254,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 2
      */
     @Test
-    public void rpnTest2() throws IOException {
+    public void rpnEquationTest2() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -276,10 +276,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 3
      */
     @Test
-    public void rpnTest3() throws IOException {
+    public void rpnEquationTest3() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -296,10 +296,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 4
      */
     @Test
-    public void rpnTest4() throws IOException {
+    public void rpnEquationTest4() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -316,10 +316,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 5
      */
     @Test
-    public void rpnTest5() throws IOException {
+    public void rpnEquationTest5() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -336,10 +336,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 6
      */
     @Test
-    public void rpnTest6() throws IOException {
+    public void rpnEquationTest6() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -355,10 +355,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for rpn equation 7
      */
     @Test
-    public void rpnTest7() throws IOException {
+    public void rpnEquationTest7() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         
@@ -374,10 +374,10 @@ public class BigNumArithmeticTest {
     /**
      * @throws IOException 
      * returns true if the condition passes
-     * checks for big numbers
+     * checks for large exponent power
      */
     @Test
-    public void rpnTest8() throws IOException {
+    public void rpnEquationTest8() throws IOException {
         final ByteArrayOutputStream outputStreamCaptor =
             new ByteArrayOutputStream();
         

@@ -41,11 +41,14 @@ public class ResLinkedList {
             head = node;
         }
         else {
+            // Assigns each next node at end
+            // if not null
             Node temp = head;
             while (temp.next != null) {
                 temp = temp.next;
             }
-
+            
+            // Finally assigns the next as node 
             temp.next = node;
         }
     }
@@ -61,8 +64,13 @@ public class ResLinkedList {
         if (node.next == null) {
             return node;
         }
-
+        
+        // Recursively calls the reverse function
+        // till the end of the node
         Node nextNodes = reverse(node.next);
+        
+        // Assigns the value of the next , next
+        // as node
         node.next.next = node;
         node.next = null;
         return nextNodes;
@@ -81,10 +89,15 @@ public class ResLinkedList {
         int carryVal = 0;
         
         while (currentNode != null || carryVal != 0) {
+            
+            // Multiply one digit from each number
             int sum = carryVal + (currentNode != null 
                 ? currentNode.value : 0) * val;
             
+            // value of each digit
             int indv = sum % 10;
+            
+            // value of carry
             carryVal = sum / 10;
             
             currentAns.next = new Node(indv);
@@ -96,6 +109,7 @@ public class ResLinkedList {
             currentAns = currentAns.next;
         }
         
+        // Return the value of the last node
         return lastNumNode.next;
     }
 
@@ -111,6 +125,7 @@ public class ResLinkedList {
         
         ResLinkedList list = new ResLinkedList();
         
+        // Convert first number from string to node
         Node firstNum = new Node(Character.getNumericValue(firstStr.charAt(
             0)));
         list.appendAtTheEnd(firstNum);
@@ -121,6 +136,8 @@ public class ResLinkedList {
         }
 
         head = null;
+        
+        // Convert second number from string to node
         Node secondNum = new Node(Character.getNumericValue(secondStr.charAt(
             0)));
         list.appendAtTheEnd(secondNum);
@@ -128,9 +145,11 @@ public class ResLinkedList {
             list.appendAtTheEnd(new Node(Character.getNumericValue(secondStr
                 .charAt(j))));
         }
-
+        
+        // Reverse the first num node to equal the value
         firstNum = reverse(firstNum);
 
+        // Reverse the second num node to equal the value
         secondNum = reverse(secondNum);
         
         Node secondNumItr = secondNum;
@@ -139,14 +158,18 @@ public class ResLinkedList {
         
         Node resItr = lastNum;
         
+        // add rows of numbers achieved in multiplication
         while (secondNumItr != null) {
             Node prod = multiplyTwoDigit(firstNum, secondNumItr.value);
             secondNumItr = secondNumItr.next;
             
-            addTwoLists(prod, resItr);
+            // Add rows of numbers
+            addTwoNums(prod, resItr);
             
             resItr = resItr.next;
         }
+        
+        // Return reversed value of the result as string
         return getOutput(reverse(lastNum.next));
     }
 
@@ -156,16 +179,20 @@ public class ResLinkedList {
      * takes the value of the strings to be added
      *  as string
      */
-    private static void addTwoLists(Node firstNum, Node resItr) {
+    private static void addTwoNums(Node firstNum, Node resItr) {
                 
         Node currentNode = firstNum;
         Node resultNode = resItr;
         int carryVal = 0;
         
+        // Loop until the size of bigger number
         while (currentNode != null || carryVal != 0) {
+            
+            // Add one digit from each number and carry value
             int sum = carryVal + (currentNode != null ? currentNode.value : 0)
                 + (resultNode.next != null ? resultNode.next.value : 0);
             
+            // Value of individual digit
             int value = sum % 10;
             
             carryVal = sum / 10;
@@ -179,10 +206,14 @@ public class ResLinkedList {
                 resultNode.next = new Node(value);
             }
             
+            // If the value of currentNode is not null
+            // assign the value of the next to it
             if (currentNode != null) 
             {
                 currentNode = currentNode.next;
             }
+            
+            // assign the next value of node to resultnode
             resultNode = resultNode.next;
         }
         
@@ -199,7 +230,7 @@ public class ResLinkedList {
         
         ResLinkedList addlist = new ResLinkedList();
 
-        
+        // Convert first number from string to node
         Node firstNumber = new Node(Character.
             getNumericValue(firstString.charAt(0)));
         addlist.appendAtTheEnd(firstNumber);
@@ -210,6 +241,8 @@ public class ResLinkedList {
         }
 
         head = null;
+        
+        // Convert second number from string to node
         Node secondNumber = new Node(Character.
             getNumericValue(secondString.charAt(
             0)));
@@ -219,9 +252,11 @@ public class ResLinkedList {
                 getNumericValue(secondString
                 .charAt(j))));
         }
-
+        
+        // Reverse the first num node to equal the value
         firstNumber = reverse(firstNumber);
 
+        // Reverse the first second node to equal the value
         secondNumber = reverse(secondNumber);
         
         int carryVal = 0;
@@ -282,6 +317,7 @@ public class ResLinkedList {
         String square = calcMul(secondString, secondString);
         String tempString = square;
         
+        // Any base power 0 is 1
         if (power == 0) 
         {
             return "1";  
@@ -297,6 +333,8 @@ public class ResLinkedList {
             //Formula from canvas - (x ^ 2) ^ (n/2)
             int n = power / 2;
             for (int i = 1; i < n; i++) {
+                // Multiply the number achieved in loop
+                // with the square
                 tempString = calcMul(tempString, square);
             }
         } 
@@ -306,6 +344,8 @@ public class ResLinkedList {
              // Formula from canvas - x * (x ^ 2) ^ (n - 1/2)
             int n = power;
             for (int i = 1; i < n - 1; i++) {
+                // Multiply the number achieved in loop
+                // with the actual value
                 String prod = calcMul(tempString, secondString);
                 tempString = prod;
             }
@@ -323,11 +363,15 @@ public class ResLinkedList {
     private static String getOutput(Node resultNode) {
         String result = "";
         Node temp = resultNode;
+        
+        // Loop till the end of the string
         while (temp != null) {
+            // append each value to the result string
             result += Integer.toString(temp.value);
             temp = temp.next;
         }
 
+        // return the value stored in node as string
         return result;
     }
 
